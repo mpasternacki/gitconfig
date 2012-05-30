@@ -7,7 +7,15 @@ namespace :gitconfig do
 end
 
 namespace 'gitconfig-highline' do
-  Bundler::GemHelper.install_tasks(:name => 'gitconfig-highline')
+  gh = Bundler::GemHelper.new(Dir.pwd, 'gitconfig-highline')
+
+  # make it use different tag, otherwise git's complaining.
+  class << gh
+    def version_tag
+      "v#{version}-hl"
+    end
+  end
+  gh.install
 end
 
 %w(build install release).each do |task_name|
